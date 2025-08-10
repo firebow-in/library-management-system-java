@@ -1,0 +1,9 @@
+# Ignore everything
+/*
+
+# Except src directory (and all its content)
+!src/
+!src/**
+
+# Except README.md at the project root
+!README.md
