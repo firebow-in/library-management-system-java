@@ -1,0 +1,57 @@
+package com.lms;
+
+import java.util.*;
+
+public class Library {
+	
+	private List<Book> books;
+    private List<User> users;
+    
+    public Library() {
+    	books = new ArrayList<>();
+    	users = new ArrayList<>();
+    }
+
+    public void addBook(Book book) {
+    	books.add(book);
+    }
+    
+    public void addUser(User user) {
+    	users.add(user);
+    }
+    
+    public Book findBookById(String bookId) {
+        for (Book book : books) {
+            if (book.getId().equals(bookId)) 
+            	return book;
+        }
+        return null;
+    }
+
+    public User findUserById(String userId) {
+        for (User user : users) {
+            if (user.getUserId().equals(userId)) 
+            	return user;
+        }
+        return null;
+    }
+
+    public boolean issueBook(String bookId, String userId) {
+        Book book = findBookById(bookId);
+        User user = findUserById(userId);
+        if (book != null && user != null && !book.isIssued() && user.getIssuedBook() == null) {
+            user.issueBook(book);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean returnBook(String userId) {
+        User user = findUserById(userId);
+        if (user != null && user.getIssuedBook() != null) {
+            user.returnBook();
+            return true;
+        }
+        return false;
+    }
+}

@@ -1,0 +1,89 @@
+package com.lms;
+
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Library library = new Library();
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("\n--- Library Management System ---");
+            System.out.println("1. Add Book");
+            System.out.println("2. Add User");
+            System.out.println("3. Issue Book");
+            System.out.println("4. Return Book");
+            System.out.println("5. Exit");
+            System.out.print("Enter your choice: ");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Clear newline left by nextInt()
+
+            switch (choice) {
+                case 1: {
+                    // Add Book
+                    System.out.print("Enter Book ID: ");
+                    String bookId = scanner.nextLine();
+                    System.out.print("Enter Book Title: ");
+                    String title = scanner.nextLine();
+                    System.out.print("Enter Book Author: ");
+                    String author = scanner.nextLine();
+
+                    Book book = new Book(bookId, title, author);
+                    library.addBook(book);
+                    System.out.println("Book added successfully.");
+                    break;
+                }
+                case 2: {
+                    // Add User
+                    System.out.print("Enter User ID: ");
+                    String userId = scanner.nextLine();
+                    System.out.print("Enter User Name: ");
+                    String userName = scanner.nextLine();
+
+                    User user = new User(userId, userName);
+                    library.addUser(user);
+                    System.out.println("User added successfully.");
+                    break;
+                }
+                case 3: {
+                    // Issue Book
+                    System.out.print("Enter Book ID to issue: ");
+                    String bookId = scanner.nextLine();
+                    System.out.print("Enter User ID: ");
+                    String userId = scanner.nextLine();
+
+                    boolean issued = library.issueBook(bookId, userId);
+                    if (issued) {
+                        System.out.println("Book issued successfully.");
+                    } else {
+                        System.out.println("Issue failed. Book may be already issued or user has a book.");
+                    }
+                    break;
+                }
+                case 4: {
+                    // Return Book
+                    System.out.print("Enter User ID to return book: ");
+                    String userId = scanner.nextLine();
+
+                    boolean returned = library.returnBook(userId);
+                    if (returned) {
+                        System.out.println("Book returned successfully.");
+                    } else {
+                        System.out.println("Return failed. User may not have any issued book.");
+                    }
+                    break;
+                }
+                case 5: {
+                    // Exit
+                    System.out.println("Exiting the system. Goodbye!");
+                    scanner.close();
+                    System.exit(0);
+                }
+                default: {
+                    System.out.println("Invalid choice. Please enter 1-5.");
+                }
+            }
+        }
+    }
+}
